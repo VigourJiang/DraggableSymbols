@@ -20,8 +20,8 @@ http://android-developers.blogspot.com/2010/07/how-to-have-your-cupcake-and-eat-
 public class SymbolDragger extends View {
 
     // Colors for background and text
-    private static final int BACKGROUND_COLOR = Color.argb(255, 230, 230, 230);
-    private static final int HEADER_COLOR = Color.argb(255, 210, 210, 210);
+    private static final int BACKGROUND_COLOR = Color.argb(255, 210, 210, 210);
+    private static final int HEADER_COLOR = Color.argb(255, 190, 190, 190);
     private static final int TEXT_COLOR = Color.argb(255, 0, 0, 0);
 
     private int numberSymbols; // Total number of symbols to use
