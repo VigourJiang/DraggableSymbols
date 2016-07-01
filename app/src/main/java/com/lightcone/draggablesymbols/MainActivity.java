@@ -1,11 +1,10 @@
 package com.lightcone.draggablesymbols;
 
+import android.os.Build;
 import android.os.Bundle;
-import android.app.Activity;
 import android.graphics.Point;
 import android.util.Log;
 import android.view.Display;
-import android.view.Menu;
 import android.view.ViewGroup;
 import android.support.v7.app.AppCompatActivity;
 
@@ -50,16 +49,27 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i = 0; i < numberSymbols; i++) {
 
-            symbolWidth[i] = this.getResources().getDrawable(symbolIndex[i])
-                    .getIntrinsicWidth();
-            symbolHeight[i] = this.getResources().getDrawable(symbolIndex[i])
-                    .getIntrinsicHeight();
-            Log.i(TAG, "Symbol width=" + symbolWidth[i] + " height="
-                    + symbolHeight[i]);
+            // getDrawable(int id) is deprecated as of API version 22 in favor of
+            // getDrawable(int id, Theme theme).  See
+            // https://developer.android.com/reference/android/content/res/Resources.html.
+            // Handle as follows.
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                symbolWidth[i] = this.getResources().getDrawable(symbolIndex[i],this.getTheme())
+                        .getIntrinsicWidth();
+                symbolHeight[i] = this.getResources().getDrawable(symbolIndex[i], this.getTheme())
+                        .getIntrinsicHeight();
+            } else {
+                symbolWidth[i] = this.getResources().getDrawable(symbolIndex[i])
+                        .getIntrinsicWidth();
+                symbolHeight[i] = this.getResources().getDrawable(symbolIndex[i])
+                        .getIntrinsicHeight();
+            }
+
+            Log.i(TAG, "Symbol width=" + symbolWidth[i] + " height=" + symbolHeight[i]);
 
             // Set top margin (header) area equal to height of tallest symbol
-            if (topMargin < symbolHeight[i])
-                topMargin = symbolHeight[i];
+            if (topMargin < symbolHeight[i]) topMargin = symbolHeight[i];
         }
 
         // Initial location of symbols. Coordinates are measured from the upper
@@ -76,15 +86,15 @@ public class MainActivity extends AppCompatActivity {
         float[] Y = new float[numberSymbols];
         Y[0] = Y[1] = Y[2] = yoff;
 
-               /*
-               * Instantiate a SymbolDragger instance (which subclasses View), passing
-               * to it in the constructor the context (this) and the above arrays.
-               * Then set the content view to this instance of SymbolDragger (so the
-               * layout is being specified entirely by SymbolDragger, with no XML
-               * layout file). The resulting view should then place draggable symbols
-               * with initial content and position defined by the above arrays on the
-               * screen.
-               */
+       /*
+       * Instantiate a SymbolDragger instance (which subclasses View), passing
+       * to it in the constructor the context (this) and the above arrays.
+       * Then set the content view to this instance of SymbolDragger (so the
+       * layout is being specified entirely by SymbolDragger, with no XML
+       * layout file). The resulting view should then place draggable symbols
+       * with initial content and position defined by the above arrays on the
+       * screen.
+       */
 
         SymbolDragger view = new SymbolDragger(this, X, Y, symbolIndex);
         view.setLayoutParams(new ViewGroup.LayoutParams(
@@ -92,5 +102,4 @@ public class MainActivity extends AppCompatActivity {
                 ViewGroup.LayoutParams.MATCH_PARENT));
         setContentView(view);
     }
-
 }

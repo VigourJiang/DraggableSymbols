@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -14,7 +15,6 @@ Adapted loosely from material discussed in
 http://android-developers.blogspot.com/2010/06/making-sense-of-multitouch.html
 See also
 http://android-developers.blogspot.com/2010/07/how-to-have-your-cupcake-and-eat-it-too.html
-This example requires only API 3 (Android 1.5).
 */
 
 public class SymbolDragger extends View {
@@ -70,7 +70,15 @@ public class SymbolDragger extends View {
 
         // Fill the symbol arrays with data
         for (int i = 0; i < numberSymbols; i++) {
-            symbol[i] = context.getResources().getDrawable(symbolIndex[i]);
+
+            // Handle method getDrawable deprecated as of API 22
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                // Theme required but set to null since no styling for it
+                symbol[i] = context.getResources().getDrawable(symbolIndex[i],null);
+            } else {
+                symbol[i] = context.getResources().getDrawable(symbolIndex[i]);
+            }
+
             symbolWidth[i] = symbol[i].getIntrinsicWidth();
             symbolHeight[i] = symbol[i].getIntrinsicHeight();
             symbol[i].setBounds(0, 0, symbolWidth[i], symbolHeight[i]);
@@ -79,7 +87,7 @@ public class SymbolDragger extends View {
         // Set up the Paint object that will control format of screen draws
         paint = new Paint();
         paint.setAntiAlias(true);
-        paint.setTextSize(18);
+        paint.setTextSize(36);
         paint.setStrokeWidth(0);
     }
 
@@ -151,15 +159,13 @@ public class SymbolDragger extends View {
 
                     // Move the object selected. Note that we are simply
                     // illustrating how to drag symbols. In an actual application,
-                    // you would probably want to add some logic to confine the
-                    // symbols
+                    // you would probably want to add some logic to confine the symbols
                     // to a region the size of the visible stage or smaller.
 
                     X[symbolSelected] += dx;
                     Y[symbolSelected] += dy;
 
-                    // Remember this touch position for the next move event of this
-                    // object
+                    // Remember this touch position for the next move event of this object
                     lastTouchX[symbolSelected] = x;
                     lastTouchY[symbolSelected] = y;
 
@@ -224,7 +230,7 @@ public class SymbolDragger extends View {
                     MainActivity.topMargin / 2 - 10, paint);
             canvas.drawText("Y = " + Y[symbolSelected],
                     MainActivity.screenWidth / 2,
-                    MainActivity.topMargin / 2 + 20, paint);
+                    MainActivity.topMargin / 2 + 25, paint);
         }
     }
 }
