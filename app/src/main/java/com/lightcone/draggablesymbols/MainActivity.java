@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Put the reference to the symbols to be used in an array.
         // The Drawable corresponds to the symbol. R.drawable.file refers to
-        // file.png, .jpg, or .gif stored in res/drawable-hdpi (referenced
+        // file.png, .jpg, or .gif stored in res/drawable (referenced
         // from code without the extension).
 
         int[] symbolIndex = { R.drawable.red_square, R.drawable.green_square,

@@ -20,9 +20,9 @@ http://android-developers.blogspot.com/2010/07/how-to-have-your-cupcake-and-eat-
 public class SymbolDragger extends View {
 
     // Colors for background and text
-    private static final int BACKGROUND_COLOR = Color.argb(255, 200, 200, 200);
-    private static final int HEADER_COLOR = Color.argb(255, 100, 100, 100);
-    private static final int TEXT_COLOR = Color.argb(255, 255, 255, 0);
+    private static final int BACKGROUND_COLOR = Color.argb(255, 230, 230, 230);
+    private static final int HEADER_COLOR = Color.argb(255, 210, 210, 210);
+    private static final int TEXT_COLOR = Color.argb(255, 0, 0, 0);
 
     private int numberSymbols; // Total number of symbols to use
     private Drawable[] symbol; // Array of symbols (dimension numberSymbols)
@@ -35,8 +35,7 @@ public class SymbolDragger extends View {
     private int symbolSelected; // Index of symbol last touched (-1 if none)
     private Paint paint;
 
-    // Following define upper left and lower right corners of display stage
-    // rectangle
+    // Following define upper left and lower right corners of display stage rectangle
     private int stageX1 = 0;
     private int stageY1 = MainActivity.topMargin;
     private int stageX2 = MainActivity.screenWidth;
